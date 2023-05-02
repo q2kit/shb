@@ -21,18 +21,19 @@ def search(request):
     q = request.GET.get('q')
     obj = Sale.objects.filter(sdt=q).first()
     if not obj:
-        return JsonResponse({
+        response = JsonResponse({
             "success": False,
         })
-    response = JsonResponse({
-        "success": True,
-        "hang": obj.hang,
-        "ten": obj.ten,
-        "ma_gt": obj.ma_gt,
-        "sdt": obj.sdt,
-        "sl": obj.sl,
-        "ky_gt": obj.ky_gt,
-    })
+    else:
+        response = JsonResponse({
+            "success": True,
+            "hang": obj.hang,
+            "ten": obj.ten,
+            "ma_gt": obj.ma_gt,
+            "sdt": obj.sdt,
+            "sl": obj.sl,
+            "ky_gt": obj.ky_gt,
+        })
     response["Access-Control-Allow-Origin"] = "*"
     return response
 
