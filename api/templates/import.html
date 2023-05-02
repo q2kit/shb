@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload file Excel</title>
+    <!-- Thêm thư viện Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Upload file Excel</h1>
+        <hr>
+
+        <!-- Thêm nút chọn file Excel -->
+        <div class="form-group">
+            <label for="excel-file">Chọn file Excel:</label>
+            <input type="file" class="form-control-file" id="excel-file" accept=".xls,.xlsx">
+        </div>
+
+        <!-- Thêm nút upload -->
+        <button type="button" class="btn btn-primary" id="upload-btn">Upload</button>
+
+    </div>
+
+    <!-- Thêm thư viện jQuery và thư viện Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Thêm mã JavaScript xử lý sự kiện -->
+    <script>
+        $(document).ready(function () {
+            $('#upload-btn').on('click', function () {
+                // Lấy file Excel
+                var file = $('#excel-file').prop('files')[0];
+
+                if (!file) {
+                    alert('Vui lòng chọn file Excel!');
+                    return;
+                }
+
+                // Tạo đối tượng FormData và thêm file vào đối tượng đó
+                var formData = new FormData();
+                formData.append('file', file);
+
+                // Gửi dữ liệu lên server sử dụng AJAX
+                $.ajax({
+                    url: '',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        // Xử lý phản hồi từ server khi upload thành công
+                        let message = response.message;
+                        // alert('Upload thành công!');
+                        alert(message);
+                        location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Xử lý khi có lỗi xảy ra
+                        alert('Upload thất bại: ' + errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
